@@ -4,7 +4,14 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker
 from sqlalchemy.pool import QueuePool
 
 # Load the database URL from environment — Cloud Run injects DATABASE_URL
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./aerofinance.db")
+DATABASE_URL = os.getenv("DATABASE_URL")
+if not DATABASE_URL:
+    # On Vercel, the root directory is read-only. We must write SQLite db to /tmp.
+    if os.getenv("VERCEL") == "1":
+        DATABASE_URL = "sqlite:////tmp/aerofinance.db"
+    else:
+        DATABASE_URL = "sqlite:///./aerofinance.db"
+
 
 # Normalise Heroku-style postgres:// to postgresql+psycopg2://
 if DATABASE_URL.startswith("postgres://"):
