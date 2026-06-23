@@ -1,0 +1,14 @@
+.env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+node_modules/
+.git
+.gitignore
+.vscode
+.gemini

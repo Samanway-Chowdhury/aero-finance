@@ -1,0 +1,42 @@
+# Python Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+target/
+ipython/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local Database
+*.db
+*.sqlite3
+
+# Environment/Secret files
+.env
+.env.*
+!.env.example
+*.local
+
+# Node/JS dependencies (if any)
+node_modules/
+.npm/
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/

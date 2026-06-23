@@ -1,0 +1,722 @@
+/* =====================================================
+   Aero Finance — Global Styles v2.0
+   ===================================================== */
+
+/* Base */
+body {
+    background-color: #000000;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(20, 241, 149, 0.03) 0%, transparent 60%),
+        radial-gradient(circle at 20% 30%, rgba(20, 241, 149, 0.01) 0%, transparent 50%);
+    color: #ffffff;
+    min-height: 100vh;
+    position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #14F195; }
+
+/* =====================================================
+   Neon Utilities
+   ===================================================== */
+.neon-text-glow {
+    text-shadow: 0 0 6px rgba(20, 241, 149, 0.6), 0 0 14px rgba(20, 241, 149, 0.3);
+}
+.neon-box-glow {
+    box-shadow: 0 0 10px rgba(20, 241, 149, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+.neon-box-glow:hover {
+    box-shadow: 0 0 24px rgba(20, 241, 149, 0.6), 0 0 6px rgba(20, 241, 149, 0.4);
+}
+.neon-glow {
+    box-shadow: 0 0 10px #14F195, 0 0 22px rgba(20, 241, 149, 0.5);
+}
+.red-text-glow {
+    text-shadow: 0 0 6px rgba(239, 68, 68, 0.8), 0 0 14px rgba(239, 68, 68, 0.4);
+}
+
+/* =====================================================
+   Dashboard Cards
+   ===================================================== */
+.dashboard-card {
+    background-color: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.dashboard-card:hover {
+    transform: scale(1.02);
+    border-color: rgba(20, 241, 149, 0.3);
+    box-shadow: 0 0 20px rgba(20, 241, 149, 0.15);
+    cursor: pointer;
+}
+.dashboard-card.danger-card {
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.1);
+}
+.dashboard-card.danger-card:hover {
+    transform: scale(1.02);
+    border-color: rgba(239, 68, 68, 0.8);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.25);
+}
+
+/* =====================================================
+   Animated Progress Bars
+   ===================================================== */
+.progress-bar-fill {
+    transition: width 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.critical-glow {
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.5);
+    border-color: rgba(239, 68, 68, 0.6) !important;
+}
+
+/* =====================================================
+   Range Slider — Wealth Projector
+   ===================================================== */
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    background: linear-gradient(to right, #14F195, #059669);
+    height: 4px;
+    border-radius: 4px;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #14F195;
+    margin-top: -7px;
+    box-shadow: 0 0 8px rgba(20, 241, 149, 0.7);
+    transition: box-shadow 0.2s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 16px rgba(20, 241, 149, 1);
+}
+input[type="range"]::-moz-range-track {
+    background: linear-gradient(to right, #14F195, #059669);
+    height: 4px;
+    border-radius: 4px;
+}
+input[type="range"]::-moz-range-thumb {
+    width: 18px; height: 18px; border: none;
+    border-radius: 50%;
+    background: #14F195;
+    box-shadow: 0 0 8px rgba(20, 241, 149, 0.7);
+}
+
+/* =====================================================
+   Chart Canvas
+   ===================================================== */
+canvas {
+    filter: drop-shadow(0 0 8px rgba(20, 241, 149, 0.12));
+}
+
+/* =====================================================
+   FAB Pulse Ring
+   ===================================================== */
+#aeroFAB {
+    animation: fabPulseRing 2.5s ease-out infinite;
+}
+@keyframes fabPulseRing {
+    0%   { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0.5), 0 0 12px rgba(20, 241, 149, 0.3); }
+    70%  { box-shadow: 0 0 0 12px rgba(20, 241, 149, 0), 0 0 20px rgba(20, 241, 149, 0.1); }
+    100% { box-shadow: 0 0 0 0 rgba(20, 241, 149, 0), 0 0 12px rgba(20, 241, 149, 0.3); }
+}
+
+/* =====================================================
+   AI Chat Bubbles
+   ===================================================== */
+.chat-bubble-ai {
+    animation: fadeSlideIn 0.25s ease-out;
+}
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =====================================================
+   Modal Entrance
+   ===================================================== */
+#authModal > div,
+#txModal > div,
+#goalModal > div {
+    animation: scaleIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes scaleIn {
+    from { transform: scale(0.92); opacity: 0; }
+    to   { transform: scale(1);    opacity: 1; }
+}
+
+/* =====================================================
+   Sidebar Nav
+   ===================================================== */
+aside nav button {
+    transition: background-color 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
+}
+aside nav button:hover { padding-left: 1.1rem; }
+aside nav button.border-neon {
+    background: linear-gradient(90deg, rgba(20, 241, 149, 0.08), transparent);
+}
+
+/* =====================================================
+   Toast Notification System
+   ===================================================== */
+#aero-toast-container {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+}
+.aero-toast {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    border: 1px solid;
+    font-size: 13px;
+    font-weight: 600;
+    backdrop-filter: blur(12px);
+    pointer-events: all;
+    animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    max-width: 320px;
+}
+.aero-toast.success {
+    background: rgba(20, 241, 149, 0.12);
+    border-color: rgba(20, 241, 149, 0.4);
+    color: #14F195;
+}
+.aero-toast.error {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+}
+.aero-toast.warning {
+    background: rgba(251, 191, 36, 0.12);
+    border-color: rgba(251, 191, 36, 0.4);
+    color: #fbbf24;
+}
+.aero-toast.info {
+    background: rgba(99, 102, 241, 0.12);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #818cf8;
+}
+@keyframes toastIn {
+    from { opacity: 0; transform: translateX(40px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes toastOut {
+    from { opacity: 1; transform: translateX(0); }
+    to   { opacity: 0; transform: translateX(40px); }
+}
+
+/* =====================================================
+   Gamification Badges
+   ===================================================== */
+.aero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    border: 1px solid;
+    letter-spacing: 0.04em;
+}
+.aero-badge.gold {
+    background: rgba(251, 191, 36, 0.12);
+    border-color: rgba(251, 191, 36, 0.5);
+    color: #fbbf24;
+}
+.aero-badge.neon {
+    background: rgba(20, 241, 149, 0.1);
+    border-color: rgba(20, 241, 149, 0.4);
+    color: #14F195;
+}
+.aero-badge.platinum {
+    background: rgba(148, 163, 184, 0.1);
+    border-color: rgba(148, 163, 184, 0.4);
+    color: #94a3b8;
+}
+
+/* =====================================================
+   Overhead Calendar
+   ===================================================== */
+.cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+.cal-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: default;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+.cal-day.has-bill {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.4);
+    color: #ef4444;
+    cursor: pointer;
+}
+.cal-day.has-bill:hover {
+    background: rgba(239, 68, 68, 0.3);
+}
+.cal-day.today {
+    border-color: rgba(20, 241, 149, 0.6);
+    color: #14F195;
+    font-weight: 700;
+}
+.cal-day.empty { opacity: 0; pointer-events: none; }
+.cal-header {
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    padding: 4px 0;
+}
+
+/* =====================================================
+   Debt Panel Toggle
+   ===================================================== */
+.strategy-toggle {
+    display: flex;
+    background: #0a0a0a;
+    border: 1px solid #1f2937;
+    border-radius: 8px;
+    padding: 4px;
+}
+.strategy-toggle button {
+    flex: 1;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: #6b7280;
+}
+.strategy-toggle button.active {
+    background: #14F195;
+    color: #000;
+}
+
+/* =====================================================
+   Streak Counter
+   ===================================================== */
+.streak-ring {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 3px solid #14F195;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(20, 241, 149, 0.3);
+}
+
+/* =====================================================
+   Mobile Layout
+   ===================================================== */
+@media (max-width: 768px) {
+    #app-container { flex-direction: column; }
+    #app-container aside { display: none !important; }
+}
+
+/* =====================================================
+   Goal Modal
+   ===================================================== */
+#goalModal {
+    backdrop-filter: blur(8px);
+}
+
+/* =====================================================
+   Animated number counter
+   ===================================================== */
+.counter-animate {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =====================================================
+   Safe-to-Spend alert state
+   ===================================================== */
+.safe-card-danger {
+    border-color: rgba(239, 68, 68, 0.6) !important;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.15) !important;
+}
+
+/* =====================================================
+   Command Bar & Neon Flash transitions
+   ==================================================== */
+.glassmorphism {
+    backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(10, 10, 10, 0.85);
+    border: 1px solid rgba(20, 241, 149, 0.2);
+}
+.neon-flash-active {
+    animation: neonFlash 0.8s ease-out;
+}
+@keyframes neonFlash {
+    0% {
+        box-shadow: 0 0 25px rgba(20, 241, 149, 0.8);
+        border-color: #14F195;
+        transform: scale(1.01);
+    }
+    50% {
+        box-shadow: 0 0 45px rgba(20, 241, 149, 1);
+        border-color: #14F195;
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* =====================================================
+   Atmospheric Glow Layouts (Hardware Accelerated)
+   ===================================================== */
+.atmospheric-glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(20, 241, 149, 0.08) 0%, rgba(20, 241, 149, 0) 70%);
+    filter: blur(50px);
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform, filter;
+    animation: atmosphericPulse 8s infinite alternate ease-in-out;
+}
+.atmospheric-glow-alt {
+    position: absolute;
+    width: 450px;
+    height: 450px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.05) 0%, rgba(245, 158, 11, 0) 70%);
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform, filter;
+    animation: atmosphericPulseAlt 12s infinite alternate ease-in-out;
+}
+@keyframes atmosphericPulse {
+    0% {
+        transform: translate(0, 0) scale(1);
+        filter: blur(50px) brightness(1);
+    }
+    100% {
+        transform: translate(40px, -40px) scale(1.15);
+        filter: blur(65px) brightness(1.2);
+    }
+}
+@keyframes atmosphericPulseAlt {
+    0% {
+        transform: translate(0, 0) scale(1);
+        filter: blur(70px) brightness(1);
+    }
+    100% {
+        transform: translate(-30px, 30px) scale(1.1);
+        filter: blur(85px) brightness(1.25);
+    }
+}
+
+/* =====================================================
+   Split Character Typography reveals
+   ===================================================== */
+.reveal-char {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(12px);
+    animation: revealCharAnim 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    animation-delay: calc(var(--i) * 0.025s);
+}
+@keyframes revealCharAnim {
+    to {
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+    }
+}
+
+/* =====================================================
+   Intersection Observer Scroll Reveal
+   ===================================================== */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.scroll-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger Utilities */
+.stagger-1 { transition-delay: 0.05s; }
+.stagger-2 { transition-delay: 0.1s; }
+.stagger-3 { transition-delay: 0.15s; }
+.stagger-4 { transition-delay: 0.20s; }
+.stagger-5 { transition-delay: 0.25s; }
+
+/* Interactive Micro-interactions targets */
+button, 
+a, 
+input, 
+select, 
+textarea,
+aside nav button,
+.strategy-toggle button {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+aside nav button:hover,
+.strategy-toggle button:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+/* Active states and static glow highlights */
+.active-highlight,
+.border-neon,
+aside nav button.border-neon {
+    box-shadow: 0 0 20px rgba(20, 241, 149, 0.15) !important;
+    border-color: #14F195 !important;
+}
+
+/* GPU Acceleration & Performance Optimizations */
+.hero-title span, #hero-headline span, .dashboard-card, .metric-card, chart-container {
+    will-change: transform, opacity, filter;
+    backface-visibility: hidden;
+}
+
+/* =====================================================
+   AUTHENTICATED DASHBOARD SHELL
+   Overrides Tailwind defaults on dynamically rendered
+   sidebar, nav, modals, and the app container canvas.
+   ===================================================== */
+
+/* Top Navigation Bar */
+nav {
+    background-color: rgba(5, 5, 5, 0.85) !important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07) !important;
+}
+
+nav h1 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+}
+
+/* App Container (post-login flex shell) */
+#app-container {
+    position: relative;
+}
+
+/* Sidebar */
+#app-container aside {
+    background-color: rgba(5, 5, 5, 0.75) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.07) !important;
+    box-shadow: 4px 0 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Sidebar Nav Items */
+#app-container aside nav button {
+    font-family: 'Inter', -apple-system, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    border-radius: 0.5rem;
+    padding: 0.65rem 0.85rem;
+    transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                padding-left 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#app-container aside nav button.border-neon {
+    background: linear-gradient(90deg, rgba(20, 241, 149, 0.1), rgba(20, 241, 149, 0.03)) !important;
+    border: 1px solid rgba(20, 241, 149, 0.35) !important;
+    color: #14F195 !important;
+    box-shadow: 0 0 18px rgba(20, 241, 149, 0.12), inset 0 0 12px rgba(20, 241, 149, 0.04) !important;
+}
+
+#app-container aside nav button:not(.border-neon):hover {
+    background-color: rgba(20, 241, 149, 0.05) !important;
+    color: #ffffff !important;
+    padding-left: 1.1rem !important;
+}
+
+/* Auth / Transaction / Goal Modals */
+#authModal > div,
+#txModal > div,
+#goalModal > div {
+    background-color: rgba(8, 8, 8, 0.92) !important;
+    backdrop-filter: blur(24px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.09) !important;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(20, 241, 149, 0.06) !important;
+}
+
+#authModal input,
+#txModal input,
+#txModal select,
+#goalModal input {
+    background-color: rgba(15, 15, 15, 0.9) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    transition: border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#authModal input:focus,
+#txModal input:focus,
+#txModal select:focus,
+#goalModal input:focus {
+    border-color: rgba(20, 241, 149, 0.6) !important;
+    box-shadow: 0 0 0 3px rgba(20, 241, 149, 0.08) !important;
+    outline: none !important;
+}
+
+/* Main content area scrollable panel */
+#app-container > div.flex-grow {
+    background: transparent;
+}
+
+/* Dashboard page heading typography */
+#app-container h2.text-3xl {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+/* Mobile menu drawer glassmorphism */
+#mobileMenu {
+    background-color: rgba(5, 5, 5, 0.95) !important;
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Sidebar footer new-entry button */
+#app-container aside .bg-neon {
+    box-shadow: 0 0 20px rgba(20, 241, 149, 0.3) !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#app-container aside .bg-neon:hover {
+    transform: scale(1.03) !important;
+    box-shadow: 0 0 32px rgba(20, 241, 149, 0.5) !important;
+}
+
+/* Transaction row hover refinement */
+.grid.grid-cols-5.p-4 {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    transition: background-color 0.25s ease !important;
+}
+.grid.grid-cols-5.p-4:hover {
+    background-color: rgba(20, 241, 149, 0.03) !important;
+}
+
+/* Command Bar container */
+#commandBarModal > div {
+    background-color: rgba(5, 5, 5, 0.95) !important;
+    backdrop-filter: blur(28px) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(200%) !important;
+    border: 1px solid rgba(20, 241, 149, 0.2) !important;
+    box-shadow: 0 0 50px rgba(20, 241, 149, 0.12), 0 25px 60px rgba(0, 0, 0, 0.8) !important;
+}
+
+#commandBarInput {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: -0.01em;
+}
+
+/* FAB refinement */
+#aeroFAB {
+    background-color: #14F195 !important;
+    box-shadow: 0 0 25px rgba(20, 241, 149, 0.45) !important;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#aeroFAB:hover {
+    transform: scale(1.1) !important;
+    box-shadow: 0 0 40px rgba(20, 241, 149, 0.65) !important;
+}
+
+.hero-title {
+    font-family: Inter, -apple-system, sans-serif !important;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+    overflow-wrap: normal;
+    word-break: keep-all;
+}
+
+.animate-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(25px);
+    filter: blur(8px);
+    will-change: transform, opacity, filter;
+    backface-visibility: hidden;
+    animation: fadeLiftBlur 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: calc(var(--i) * 0.02s);
+}
+
+@keyframes fadeLiftBlur {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+    }
+}
+

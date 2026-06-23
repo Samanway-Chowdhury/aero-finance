@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Aero Finance — AI-driven financial intelligence with real-time WebSocket sync, autonomous goal tracking, and predictive budgeting.">
+    <title>Aero Finance — Financial Intelligence, Elevated.</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neon: '#14F195',
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        darkest: '#000000',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Recharts (via React/ReactDOM for charts) OR Chart.js for simplicity in vanilla -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.51/build/spline-viewer.js"></script>
+    <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body class="bg-darkest text-white font-sans antialiased overflow-x-hidden min-h-screen flex flex-col" style="background-color:#000; background-image: radial-gradient(ellipse 80% 50% at 50% -10%, rgba(20,241,149,0.04) 0%, transparent 70%), radial-gradient(ellipse 60% 40% at 80% 80%, rgba(20,241,149,0.025) 0%, transparent 60%);">
+
+    <!-- Ambient Glowing Layout Backgrounds -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div class="atmospheric-glow top-1/4 left-1/4"></div>
+        <div class="atmospheric-glow-alt bottom-1/4 right-1/4"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="flex justify-between items-center p-6 bg-darker border-b border-gray-800 relative z-50">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-full bg-neon animate-pulse neon-glow"></div>
+            <h1 class="text-2xl font-bold tracking-widest text-white neon-text-glow">AERO FINANCE</h1>
+        </div>
+        <div id="navGuestActions" class="hidden md:flex space-x-6 items-center">
+            <button id="navLoginBtn" class="text-gray-400 hover:text-neon transition">Login</button>
+            <button id="navSignupBtn" class="px-5 py-2 border border-neon text-neon rounded hover:bg-neon hover:text-black transition neon-box-glow font-semibold">Sign Up</button>
+        </div>
+        <div id="navUserActions" class="hidden space-x-4 items-center">
+            <div class="text-right">
+                <p class="text-xs text-gray-500">Pilot</p>
+                <p id="navUserName" class="text-sm font-bold text-neon"></p>
+            </div>
+            <div onclick="renderDashboardView()" class="w-10 h-10 rounded-full border border-neon flex items-center justify-center cursor-pointer hover:bg-neon hover:text-black transition">
+                <i class="fas fa-user-astronaut"></i>
+            </div>
+            <button onclick="logout()" class="text-gray-500 hover:text-red-400 transition ml-2">
+                <i class="fas fa-power-off"></i>
+            </button>
+        </div>
+        <!-- Mobile menu button -->
+        <button id="mobileMenuBtn" class="md:hidden text-2xl text-neon hover:text-white transition">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black bg-opacity-70 z-40 hidden md:hidden"></div>
+
+    <!-- Mobile Sidebar Drawer -->
+    <div id="mobileMenu" class="fixed top-0 left-0 h-full w-64 bg-darker border-r border-gray-800 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col p-6 md:hidden">
+        <div class="flex justify-between items-center mb-8">
+            <span class="text-lg font-bold text-neon tracking-widest">AERO</span>
+            <button id="mobileMenuClose" onclick="document.getElementById('mobileMenu').classList.add('-translate-x-full'); document.getElementById('mobileMenuOverlay').classList.add('hidden');" class="text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="space-y-2 flex-grow">
+            <button onclick="renderDashboardView(); document.getElementById('mobileMenu').classList.add('-translate-x-full'); document.getElementById('mobileMenuOverlay').classList.add('hidden');" class="w-full text-left p-3 rounded hover:bg-dark text-gray-400 hover:text-white flex items-center space-x-3 transition">
+                <i class="fas fa-home w-5"></i> <span>Dashboard</span>
+            </button>
+            <button onclick="renderTransactionsView(); document.getElementById('mobileMenu').classList.add('-translate-x-full'); document.getElementById('mobileMenuOverlay').classList.add('hidden');" class="w-full text-left p-3 rounded hover:bg-dark text-gray-400 hover:text-white flex items-center space-x-3 transition">
+                <i class="fas fa-list w-5"></i> <span>Transactions</span>
+            </button>
+            <button onclick="renderBudgetingView(); document.getElementById('mobileMenu').classList.add('-translate-x-full'); document.getElementById('mobileMenuOverlay').classList.add('hidden');" class="w-full text-left p-3 rounded hover:bg-dark text-gray-400 hover:text-white flex items-center space-x-3 transition">
+                <i class="fas fa-chart-pie w-5"></i> <span>Budgeting</span>
+            </button>
+            <button onclick="renderBillsView(); document.getElementById('mobileMenu').classList.add('-translate-x-full'); document.getElementById('mobileMenuOverlay').classList.add('hidden');" class="w-full text-left p-3 rounded hover:bg-dark text-gray-400 hover:text-white flex items-center space-x-3 transition">
+                <i class="fas fa-file-invoice-dollar w-5"></i> <span>Bills &amp; Subs</span>
+            </button>
+            <button onclick="renderGoalsView(); document.getElementById('mobileMenu').classList.add('-translate-x-full'); document.getElementById('mobileMenuOverlay').classList.add('hidden');" class="w-full text-left p-3 rounded hover:bg-dark text-gray-400 hover:text-white flex items-center space-x-3 transition">
+                <i class="fas fa-bullseye w-5"></i> <span>Goals</span>
+            </button>
+        </nav>
+        <div class="pt-6 border-t border-gray-800 space-y-2">
+            <button onclick="openTxModal()" class="w-full bg-neon text-black p-3 rounded font-bold hover:brightness-110 flex items-center justify-center space-x-2 transition">
+                <i class="fas fa-plus"></i> <span>New Log Entry</span>
+            </button>
+            <button onclick="logout()" class="w-full text-left p-3 rounded hover:bg-red-900/20 text-gray-500 hover:text-red-400 flex items-center space-x-3 transition">
+                <i class="fas fa-sign-out-alt"></i> <span>Terminate Session</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Container -->
+    <main id="app-container" class="flex-grow flex relative">
+        <!-- Views will be injected here -->
+    </main>
+
+    <!-- Authentication Modal -->
+    <div id="authModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-50 flex justify-center items-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-dark p-8 rounded-xl border border-gray-800 w-full max-w-md shadow-2xl relative overflow-hidden">
+            <!-- Glow accent -->
+            <div class="absolute top-0 left-0 w-full h-1 bg-neon shadow-[0_0_15px_#14F195]"></div>
+            
+            <h2 id="authTitle" class="text-2xl font-bold mb-6 text-center">Identity Verification</h2>
+            
+            <!-- Step 1 Form -->
+            <form id="authStep1" class="space-y-4">
+                <div id="authTypeSelector" class="flex border-b border-gray-800 mb-4">
+                    <button type="button" id="tabSignup" class="flex-1 py-2 text-neon border-b-2 border-neon font-bold">Sign Up</button>
+                    <button type="button" id="tabLogin" class="flex-1 py-2 text-gray-500 hover:text-white transition">Login</button>
+                </div>
+
+                <div id="signupFields">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Full Name</label>
+                        <input type="text" id="authName" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition">
+                    </div>
+                    <div class="flex space-x-4 mt-4">
+                        <div class="w-1/3">
+                            <label class="block text-sm text-gray-400 mb-1">Age</label>
+                            <input type="number" id="authAge" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition">
+                        </div>
+                        <div class="w-2/3">
+                            <label class="block text-sm text-gray-400 mb-1">Nationality</label>
+                            <select id="authNationality" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition">
+                                <option value="US">United States (USD)</option>
+                                <option value="UK">United Kingdom (GBP)</option>
+                                <option value="EU">European Union (EUR)</option>
+                                <option value="IN">India (INR)</option>
+                                <option value="JP">Japan (JPY)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <label class="block text-sm text-gray-400 mb-1">Bank Name</label>
+                        <input type="text" id="authBank" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition">
+                    </div>
+                </div>
+
+                <div id="loginFields" class="hidden">
+                    <p class="text-sm text-gray-500 mb-4 text-center">Access your Aero Archive using your account number.</p>
+                </div>
+
+                <button type="submit" id="authNextBtn" class="w-full mt-6 bg-transparent border border-neon text-neon py-2 rounded hover:bg-neon hover:text-black transition neon-box-glow font-semibold">Next Step</button>
+            </form>
+
+            <!-- Step 2 Form (Hidden initially) -->
+            <form id="authStep2" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Account Number</label>
+                    <input type="text" id="authAccount" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition" required>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Password</label>
+                    <input type="password" id="authPassword" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition" required>
+                </div>
+                <div id="signupOnlyFields">
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-1">Mobile / Email (Linked)</label>
+                        <input type="text" id="authContact" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition">
+                    </div>
+                    <div class="flex space-x-4 mt-4">
+                        <div class="w-1/2">
+                            <label class="block text-sm text-gray-400 mb-1">Card Expiry</label>
+                            <input type="text" id="authExpiry" placeholder="MM/YY" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition">
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-sm text-gray-400 mb-1">CR Number</label>
+                            <input type="text" id="authCR" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" id="authVerifyBtn" class="w-full mt-6 bg-neon text-black py-2 rounded hover:brightness-110 transition neon-box-glow font-bold relative flex justify-center items-center">
+                    <span id="verifyText">Verify Identity</span>
+                    <i id="verifySpinner" class="fas fa-circle-notch fa-spin hidden absolute"></i>
+                </button>
+                <button type="button" id="authBackBtn" class="w-full mt-2 text-gray-500 text-sm hover:text-white transition">Back</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- Voice Feedback Indicator -->
+    <div id="voiceIndicator" class="fixed top-20 left-1/2 transform -translate-x-1/2 bg-darker border border-neon text-neon px-4 py-2 rounded-full flex items-center space-x-2 z-50 hidden">
+        <i class="fas fa-microphone animate-pulse"></i>
+        <span id="voiceStatus" class="text-sm font-semibold">Listening...</span>
+    </div>
+
+    <!-- Transaction Modal -->
+    <div id="txModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-50 flex justify-center items-center hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-dark p-8 rounded-xl border border-gray-800 w-full max-w-md shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-1 bg-neon shadow-[0_0_15px_#14F195]"></div>
+            <h2 class="text-2xl font-bold mb-6">Log New Entry</h2>
+            <form id="txForm" class="space-y-4">
+                <div class="flex space-x-4">
+                    <button type="button" id="txTypeIncome" class="flex-1 py-2 rounded bg-dark border border-gray-700 text-gray-400 hover:border-neon transition">Income</button>
+                    <button type="button" id="txTypeExpense" class="flex-1 py-2 rounded bg-dark border border-neon text-neon font-bold transition">Expense</button>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Amount</label>
+                    <input type="number" id="txAmount" step="0.01" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition" required>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Category</label>
+                    <select id="txCategory" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition">
+                        <option value="Salary">Salary / Income</option>
+                        <option value="Dining">Dining</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-1">Description</label>
+                    <input type="text" id="txDescription" placeholder="What was this for?" class="w-full bg-darker border border-gray-700 rounded p-2 text-white focus:border-neon focus:outline-none transition" required>
+                </div>
+                <button type="submit" class="w-full mt-6 bg-neon text-black py-2 rounded hover:brightness-110 transition neon-box-glow font-bold">Secure Entry</button>
+                <button type="button" id="closeTxBtn" class="w-full mt-2 text-gray-500 text-sm hover:text-white transition">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating AI Chat Button (visible when logged in) -->
+    <button id="aeroFAB" onclick="openChatPanel()" class="fixed bottom-6 right-6 w-14 h-14 bg-neon text-black rounded-full shadow-2xl flex items-center justify-center text-xl z-40 hover:brightness-110 transition neon-box-glow hidden" title="Ask Aero AI">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <!-- Command Bar Modal (Ctrl+K) -->
+    <div id="commandBarModal" class="fixed inset-0 bg-black/60 backdrop-blur-md z-50 flex justify-center items-start pt-[15vh] hidden opacity-0 transition-all duration-300">
+        <div class="bg-black/90 p-6 rounded-xl border border-neon/30 w-full max-w-lg shadow-[0_0_30px_rgba(20,241,149,0.15)] relative overflow-hidden glassmorphism">
+            <div class="absolute top-0 left-0 w-full h-0.5 bg-neon shadow-[0_0_15px_#14F195]"></div>
+            
+            <div class="flex items-center space-x-3 mb-4">
+                <i class="fas fa-terminal text-neon animate-pulse text-lg"></i>
+                <input type="text" id="commandBarInput" placeholder="Type a command (e.g. 'go to goals', 'spend 45 on dining', 'create goal Tesla target 50000')..." class="w-full bg-transparent text-white border-none focus:outline-none focus:ring-0 text-base" autofocus>
+                <span class="text-[10px] bg-gray-800 text-gray-400 px-1.5 py-0.5 rounded font-mono border border-gray-700">ESC</span>
+            </div>
+            
+            <div class="border-t border-gray-800/80 pt-3">
+                <p class="text-[10px] text-gray-500 uppercase tracking-wider mb-2 font-bold">Suggestions</p>
+                <div class="space-y-1 text-xs text-gray-400">
+                    <div class="flex justify-between items-center hover:bg-white/5 p-2 rounded cursor-pointer transition" onclick="triggerCommandSuggestion('go to goals')">
+                        <span>Navigate to Goals & Savings</span>
+                        <span class="text-[10px] text-gray-600 font-mono">go to goals</span>
+                    </div>
+                    <div class="flex justify-between items-center hover:bg-white/5 p-2 rounded cursor-pointer transition" onclick="triggerCommandSuggestion('spend $50 on dining for dinner')">
+                        <span>Log Dining Expense of $50</span>
+                        <span class="text-[10px] text-gray-600 font-mono">spend $50 on dining</span>
+                    </div>
+                    <div class="flex justify-between items-center hover:bg-white/5 p-2 rounded cursor-pointer transition" onclick="triggerCommandSuggestion('create goal Vacation target 3000')">
+                        <span>Launch new saving milestone</span>
+                        <span class="text-[10px] text-gray-600 font-mono">create goal Vacation target 3000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js?v=4"></script>
+</body>
+</html>
